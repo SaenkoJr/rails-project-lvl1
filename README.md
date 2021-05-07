@@ -2,6 +2,7 @@
 [![Actions Status](https://github.com/SaenkoJr/rails-project-lvl1/workflows/hexlet-check/badge.svg)](https://github.com/SaenkoJr/rails-project-lvl1/actions)
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop/rubocop)
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-community-brightgreen.svg)](https://rubystyle.guide)
+[![ruby-check](https://github.com/SaenkoJr/rails-project-lvl1/actions/workflows/rubocop.yml/badge.svg?branch=main)](https://github.com/SaenkoJr/rails-project-lvl1/actions/workflows/rubocop.yml)
 
 # HexletCode
 
