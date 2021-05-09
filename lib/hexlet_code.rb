@@ -6,8 +6,8 @@ require 'hexlet_code/form'
 
 module HexletCode
   class << self
-    def form_for(model)
-      HexletCode::Tag.build('form', action: '#', method: 'post') do
+    def form_for(model, url: '#')
+      HexletCode::Tag.build('form', action: url, method: 'post') do
         inputs = yield HexletCode::Form.new(model)
         inputs.join
       end
