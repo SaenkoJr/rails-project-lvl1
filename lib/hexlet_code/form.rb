@@ -7,10 +7,11 @@ module HexletCode
       @inputs = []
     end
 
-    def input(name, as: :string)
+    def input(name, attrs = {})
+      type = attrs.fetch(:as, :input)
       value = @model[name]
       @inputs << HexletCode::Tag.build('label', for: name) { name.capitalize }
-      @inputs << if as == :text
+      @inputs << if type == :text
                    HexletCode::Tag.build('textarea', cols: 20, rows: 40, name: name) { value }
                  else
                    HexletCode::Tag.build('input', name: name, type: 'text', value: value)
