@@ -5,6 +5,10 @@ require: rubocop-minitest
 AllCops:
   NewCops: enable
 
+Naming/MethodParameterName:
+  AllowedNames:
+    - as
+
 Style/FrozenStringLiteralComment:
   Enabled: true
   SafeAutoCorrect: true
