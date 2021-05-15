@@ -2,26 +2,32 @@
 
 module HexletCode
   class Tag
-    def self.build(name, attrs = {})
-      body = yield if block_given?
+    class << self
+      def build(name, attrs = {})
+        body = yield if block_given?
 
-      tag = Tag.new(name, body: body, **attrs)
-      ast = tag.build_ast
+        if body.nil?
+          render_single_tag(name, attrs)
+        else
+          render_paired_tag(name, body: body, **attrs)
+        end
+      end
 
-      HexletCode::Renderer.render(ast)
-    end
+      def render_paired_tag(tag, body: '', **attrs)
+        open_tag = "<#{tag}#{build_attr_string(attrs)}>"
+        close_tag = "</#{tag}>"
 
-    def initialize(name, body: nil, **attrs)
-      @name = name
-      @body = body
-      @attrs = attrs
-    end
+        %(#{open_tag}#{body}#{close_tag})
+      end
 
-    def build_ast
-      if @body.nil?
-        HexletCode::AST.build(@name, :single, **@attrs)
-      else
-        HexletCode::AST.build(@name, :paired, body: @body, **@attrs)
+      def render_single_tag(tag, attrs)
+        "<#{tag}#{build_attr_string(attrs)}>"
+      end
+
+      def build_attr_string(attrs)
+        attrs
+          .map { |key, value| " #{key}=\"#{value}\"" }
+          .join
       end
     end
   end

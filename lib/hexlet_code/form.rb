@@ -1,18 +1,19 @@
 # frozen_string_literal: true
 
-require 'hexlet_code/tags/input'
-require 'hexlet_code/tags/textarea'
+require 'hexlet_code/inputs/input'
+require 'hexlet_code/inputs/textarea'
+require 'hexlet_code/inputs/submit'
 
 module HexletCode
   class Form
     INPUT_TYPES = {
-      string: HexletCode::Tags::Input,
-      text: HexletCode::Tags::TextArea
+      string: HexletCode::Inputs::Input,
+      text: HexletCode::Inputs::TextArea
     }.freeze
 
     DEFAULT_ATTRIBUTES = {
-      method: 'post',
-      action: '#'
+      action: '#',
+      method: 'post'
     }.freeze
 
     def initialize(model, url:, **attrs)
@@ -21,7 +22,7 @@ module HexletCode
       @body = []
     end
 
-    def build_ast
+    def ast
       HexletCode::AST.build('form', :paired, @attrs) do |children|
         children.concat @body
       end
@@ -32,12 +33,14 @@ module HexletCode
       # rubocop:enable Naming/MethodParameterName
 
       value = @model[name]
-      label = HexletCode::Tag.new('label', body: value, for: name).build_ast
-      input = INPUT_TYPES[as].new(value: name).build_ast
+      label = HexletCode::AST.build('label', :paired, inner_text: name.capitalize, for: name)
+      input = INPUT_TYPES[as].new(value: value, name: name, **attrs).ast
       @body << label
       @body << input
     end
 
-    def submit(value = 'Save'); end
+    def submit(attrs = {})
+      @body << HexletCode::Inputs::Submit.new(attrs).ast
+    end
   end
 end

@@ -8,12 +8,11 @@ require 'hexlet_code/renderer'
 
 module HexletCode
   class << self
-    def form_for(model, url: '#', &block)
+    def form_for(model, url: '#')
       form = HexletCode::Form.new(model, url: url)
       yield form
-      pp form.build_ast
 
-      # HexletCode::Renderer.render form.build_ast
+      HexletCode::Renderer.render form.ast
     end
   end
 end

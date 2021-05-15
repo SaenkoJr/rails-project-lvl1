@@ -4,40 +4,17 @@ module HexletCode
   class Renderer
     class << self
       def render(ast)
-        tag = ast[:tag]
-        tag_type = ast[:tag_type]
-        meta = ast[:meta]
-        children = ast[:children]
+        tag, tag_type, meta, children = ast.values_at(:tag, :tag_type, :meta, :children)
+        inner_text = meta.delete(:inner_text) { '' }
 
-        if tag_type == :paired
-          render_paired_tag(tag, children, **meta)
-        else
-          render_single_tag(tag, meta)
+        return HexletCode::Tag.build(tag, meta) if tag_type == :single
+        return HexletCode::Tag.build(tag, meta) { inner_text } if children.nil?
+
+        HexletCode::Tag.build(tag, meta) do
+          children.map { |child| HexletCode::Renderer.render(child) }
+                  .flatten
+                  .join
         end
-      end
-
-      private
-
-      def render_paired_tag(tag, _children, body:, **attrs)
-        open_tag = "<#{tag}#{build_attr_string(attrs)}>"
-        close_tag = "</#{tag}>"
-
-        return [open_tag, body, close_tag].join unless body.nil?
-
-        [
-          "<#{tag}#{build_attr_string(attrs)}>",
-          "</#{tag}>"
-        ].join('\n')
-      end
-
-      def render_single_tag(tag, attrs)
-        "<#{tag}#{build_attr_string(attrs)}>"
-      end
-
-      def build_attr_string(attrs)
-        attrs
-          .map { |key, value| " #{key}=\"#{value}\"" }
-          .join
       end
     end
   end
