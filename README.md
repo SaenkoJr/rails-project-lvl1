@@ -38,3 +38,8 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/Saenko
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
+input -> { type, value, name, class }
+textarea -> { value, name, class }
+label -> { for, value, class }
+form -> { action, method, class }

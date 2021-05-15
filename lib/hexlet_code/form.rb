@@ -1,25 +1,43 @@
 # frozen_string_literal: true
 
+require 'hexlet_code/tags/input'
+require 'hexlet_code/tags/textarea'
+
 module HexletCode
   class Form
-    def initialize(model)
+    INPUT_TYPES = {
+      string: HexletCode::Tags::Input,
+      text: HexletCode::Tags::TextArea
+    }.freeze
+
+    DEFAULT_ATTRIBUTES = {
+      method: 'post',
+      action: '#'
+    }.freeze
+
+    def initialize(model, url:, **attrs)
       @model = model
-      @inputs = []
+      @attrs = DEFAULT_ATTRIBUTES.merge({ action: url }, **attrs)
+      @body = []
     end
 
-    def input(name, attrs = {})
-      type = attrs.fetch(:as, :input)
+    def build_ast
+      HexletCode::AST.build('form', :paired, @attrs) do |children|
+        children.concat @body
+      end
+    end
+
+    # rubocop:disable Naming/MethodParameterName
+    def input(name, as: :string, **attrs)
+      # rubocop:enable Naming/MethodParameterName
+
       value = @model[name]
-      @inputs << HexletCode::Tag.build('label', for: name) { name.capitalize }
-      @inputs << if type == :text
-                   HexletCode::Tag.build('textarea', cols: 20, rows: 40, name: name) { value }
-                 else
-                   HexletCode::Tag.build('input', name: name, type: 'text', value: value)
-                 end
+      label = HexletCode::Tag.new('label', body: value, for: name).build_ast
+      input = INPUT_TYPES[as].new(value: name).build_ast
+      @body << label
+      @body << input
     end
 
-    def submit(value = 'Save')
-      @inputs << HexletCode::Tag.build('input', name: 'commit', value: value, type: 'submit')
-    end
+    def submit(value = 'Save'); end
   end
 end
