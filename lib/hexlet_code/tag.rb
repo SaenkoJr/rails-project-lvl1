@@ -13,6 +13,8 @@ module HexletCode
         end
       end
 
+      private
+
       def render_paired_tag(tag, body: '', **attrs)
         open_tag = "<#{tag}#{build_attr_string(attrs)}>"
         close_tag = "</#{tag}>"
