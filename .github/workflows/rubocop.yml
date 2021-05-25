@@ -15,12 +15,10 @@ on:
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
         ruby-version: ['2.7']
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up Ruby
@@ -32,4 +30,6 @@ jobs:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Run rubocop
-      run: bundle exec rubocop
+      run: make lint
+    - name: Run tests
+      run: make test

@@ -23,17 +23,14 @@ module HexletCode
     end
 
     def ast
-      HexletCode::AST.build('form', :paired, @attrs) do |children|
+      AST.build('form', :paired, @attrs) do |children|
         children.concat @body
       end
     end
 
-    # rubocop:disable Naming/MethodParameterName
-    def input(name, as: :string, **attrs)
-      # rubocop:enable Naming/MethodParameterName
-
+    def input(name, as: :string, **attrs) # rubocop:disable Naming/MethodParameterName
       value = @model[name]
-      label = HexletCode::AST.build('label', :paired, inner_text: name.capitalize, for: name)
+      label = AST.build('label', :paired, inner_text: name.capitalize, for: name)
       input = INPUT_TYPES[as].new(value: value, name: name, **attrs).ast
       @body << label
       @body << input
