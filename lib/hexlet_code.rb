@@ -9,8 +9,8 @@ module HexletCode
   autoload :Tag, 'hexlet_code/tag'
 
   class << self
-    def form_for(model, url: '#')
-      form = Form.new(model, url: url)
+    def form_for(model, url: '#', **kwargs)
+      form = Form.new(model, url: url, **kwargs)
       yield form
 
       Renderer.render form.ast
