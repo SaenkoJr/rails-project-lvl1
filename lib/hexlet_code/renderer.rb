@@ -20,6 +20,7 @@ module HexletCode
         end
 
         pp '=================================================='
+        pp tag
         pp attributes
         pp '=================================================='
         tag.build(attributes)
