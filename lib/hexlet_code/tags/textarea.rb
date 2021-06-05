@@ -10,12 +10,11 @@ module HexletCode
         }.freeze
 
         def render(value: '', **attrs)
-          pp '=================================================='
-          pp 'textarea build'
-          pp value
-          pp '=================================================='
           attributes = DEFAULT_ATTRIBUTES.merge(attrs)
-          Tag.build('textarea', attributes) { value }
+          [
+            Tag.build('label', for: attributes[:name]) { attributes[:name].capitalize },
+            Tag.build('textarea', attributes) { value }
+          ].join
         end
       end
     end

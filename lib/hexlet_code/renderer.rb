@@ -10,14 +10,9 @@ module HexletCode
         type, attributes = state.values_at(:type, :attributes)
         tag = Tags.select_by_type(type)
 
-        pp '=================================================='
-        pp tag
-        pp state
-        pp '=================================================='
         if type == :form
           value = state[:inputs]
                   .map { |input| render(input) }
-                  .flatten
                   .join
 
           return tag.render(value: value, **attributes)
