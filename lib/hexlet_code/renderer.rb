@@ -15,14 +15,13 @@ module HexletCode
                   .map { |input| render(input) }
                   .flatten
                   .join
+          pp '=================================================='
+          pp value
+          pp '=================================================='
 
           return tag.build(value: value, **attributes)
         end
 
-        pp '=================================================='
-        pp tag.methods.sort
-        pp attributes
-        pp '=================================================='
         tag.build(attributes)
       end
     end
