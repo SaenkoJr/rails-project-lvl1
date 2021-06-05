@@ -1,19 +1,16 @@
 # frozen_string_literal: true
 
-require 'hexlet_code/version'
-
 module HexletCode
-  autoload :AST, 'hexlet_code/ast'
+  autoload :Version, 'hexlet_code/version'
   autoload :Renderer, 'hexlet_code/renderer'
   autoload :Form, 'hexlet_code/form'
-  autoload :Tag, 'hexlet_code/tag'
 
   class << self
     def form_for(model, url: '#', **kwargs)
-      form = Form.new(model, url: url, **kwargs)
+      form = Form.new(model, action: url, **kwargs)
       yield form
 
-      Renderer.render form.ast
+      Renderer.render form.state
     end
   end
 end

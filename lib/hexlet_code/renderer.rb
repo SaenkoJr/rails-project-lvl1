@@ -1,20 +1,25 @@
 # frozen_string_literal: true
 
 module HexletCode
+  autoload :Tag, 'hexlet_code/tag'
+  autoload :Tags, 'hexlet_code/tags/tags'
+
   class Renderer
     class << self
-      def render(ast)
-        tag, tag_type, meta, children = ast.values_at(:tag, :tag_type, :meta, :children)
-        inner_text = meta.delete(:inner_text) { '' }
+      def render(state)
+        type, attributes = state.values_at(:type, :attributes)
+        tag = Tags.select_by_type(type)
 
-        return HexletCode::Tag.build(tag, meta) if tag_type == :single
-        return HexletCode::Tag.build(tag, meta) { inner_text } if children.nil?
-
-        HexletCode::Tag.build(tag, meta) do
-          children.map { |child| HexletCode::Renderer.render(child) }
+        if type == :form
+          value = state[:inputs]
+                  .map { |input| render(input) }
                   .flatten
                   .join
+
+          return tag.build(value: value, **attributes)
         end
+
+        tag.build(attributes)
       end
     end
   end

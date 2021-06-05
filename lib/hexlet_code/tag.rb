@@ -19,7 +19,7 @@ module HexletCode
         open_tag = "<#{tag}#{build_attr_string(attrs)}>"
         close_tag = "</#{tag}>"
 
-        %(#{open_tag}#{body}#{close_tag})
+        "#{open_tag}#{body}#{close_tag}"
       end
 
       def render_single_tag(tag, attrs)
