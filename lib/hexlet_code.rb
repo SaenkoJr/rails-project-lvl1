@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module HexletCode
+  autoload :Tag, 'hexlet_code/tag'
   autoload :Version, 'hexlet_code/version'
   autoload :Renderer, 'hexlet_code/renderer'
   autoload :Form, 'hexlet_code/form'
