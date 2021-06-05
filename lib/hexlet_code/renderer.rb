@@ -11,8 +11,8 @@ module HexletCode
         tag = Tags.select_by_type(type)
 
         pp '=================================================='
-        pp 'state'
         pp tag
+        pp state
         pp '=================================================='
         if type == :form
           value = state[:inputs]
@@ -23,7 +23,7 @@ module HexletCode
           return tag.render(value: value, **attributes)
         end
 
-        tag.render(attributes)
+        tag.render(**attributes)
       end
     end
   end

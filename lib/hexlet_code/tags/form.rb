@@ -3,12 +3,12 @@
 module HexletCode
   module Tags
     class Form
-      DEFAULT_ATTRIBUTES = {
-        action: '#',
-        method: 'post'
-      }.freeze
-
       class << self
+        DEFAULT_ATTRIBUTES = {
+          action: '#',
+          method: 'post'
+        }.freeze
+
         def render(value: '', **attrs)
           attributes = DEFAULT_ATTRIBUTES.merge(attrs)
           Tag.build('form', attributes) { value }
