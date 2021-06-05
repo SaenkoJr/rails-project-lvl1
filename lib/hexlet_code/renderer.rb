@@ -7,6 +7,10 @@ module HexletCode
   class Renderer
     class << self
       def render(state)
+        pp '=================================================='
+        pp 'state'
+        pp state
+        pp '=================================================='
         type, attributes = state.values_at(:type, :attributes)
         tag = Tags.select_by_type(type)
 
@@ -15,9 +19,6 @@ module HexletCode
                   .map { |input| render(input) }
                   .flatten
                   .join
-          pp '=================================================='
-          pp value
-          pp '=================================================='
 
           return tag.build(value: value, **attributes)
         end
