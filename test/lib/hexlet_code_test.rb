@@ -16,7 +16,7 @@ class HexletCodeTest < Minitest::Test
   def test_form_for
     expected = File.read('test/fixtures/form.html').strip
 
-    result = HexletCode.form_for @user, url: '#' do |f|
+    result = HexletCode.form_for @user do |f|
       f.input :name
       f.input :job, as: :text
       f.submit
