@@ -24,4 +24,16 @@ class HexletCodeTest < Minitest::Test
 
     assert_equal expected, result
   end
+
+  def test_form_for_with_attributes
+    expected = File.read('test/fixtures/form2.html').strip
+
+    result = HexletCode.form_for @user, url: '/somewhere' do |f|
+      f.input :name
+      f.input :job, as: :text, rows: 50, cols: 20
+      f.submit 'Wow'
+    end
+
+    assert_equal expected, result
+  end
 end

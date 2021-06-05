@@ -24,8 +24,11 @@ module HexletCode
       }
     end
 
-    def submit(attrs = {})
-      @inputs << { type: :submit, attributes: attrs }
+    def submit(value = 'Save', **attrs)
+      @inputs << {
+        type: :submit,
+        attributes: { value: value, **attrs }
+      }
     end
   end
 end
