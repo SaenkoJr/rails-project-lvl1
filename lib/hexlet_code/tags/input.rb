@@ -8,7 +8,7 @@ module HexletCode
           type: 'text'
         }.freeze
 
-        def build(attrs)
+        def render(attrs)
           attributes = DEFAULT_ATTRIBUTES.merge(attrs)
           [
             Tag.build('label', for: attributes[:name]) { attributes[:name].capitalize },

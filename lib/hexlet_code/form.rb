@@ -9,9 +9,6 @@ module HexletCode
     end
 
     def state
-      pp '=================================================='
-      pp 'StAte call'
-      pp '=================================================='
       {
         type: :form,
         attributes: @attributes,

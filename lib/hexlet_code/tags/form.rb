@@ -9,7 +9,7 @@ module HexletCode
       }.freeze
 
       class << self
-        def build(value: '', **attrs)
+        def render(value: '', **attrs)
           attributes = DEFAULT_ATTRIBUTES.merge(attrs)
           Tag.build('form', attributes) { value }
         end

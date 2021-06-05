@@ -9,7 +9,7 @@ module HexletCode
           rows: 40
         }.freeze
 
-        def build(value: '', **attrs)
+        def render(value: '', **attrs)
           pp '=================================================='
           pp 'textarea build'
           pp value

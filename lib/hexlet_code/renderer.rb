@@ -7,23 +7,23 @@ module HexletCode
   class Renderer
     class << self
       def render(state)
-        pp '=================================================='
-        pp 'state'
-        pp state
-        pp '=================================================='
         type, attributes = state.values_at(:type, :attributes)
         tag = Tags.select_by_type(type)
 
+        pp '=================================================='
+        pp 'state'
+        pp tag
+        pp '=================================================='
         if type == :form
           value = state[:inputs]
                   .map { |input| render(input) }
                   .flatten
                   .join
 
-          return tag.build(value: value, **attributes)
+          return tag.render(value: value, **attributes)
         end
 
-        tag.build(attributes)
+        tag.render(attributes)
       end
     end
   end

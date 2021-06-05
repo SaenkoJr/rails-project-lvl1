@@ -7,9 +7,6 @@ module HexletCode
 
   class << self
     def form_for(model, url: '#', **kwargs)
-      pp '=================================================='
-      pp model
-      pp '=================================================='
       form = Form.new(model, action: url, **kwargs)
       yield form
 

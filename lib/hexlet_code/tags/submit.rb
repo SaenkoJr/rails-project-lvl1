@@ -10,7 +10,7 @@ module HexletCode
           name: 'commit'
         }.freeze
 
-        def build(attrs)
+        def render(attrs)
           attributes = DEFAULT_ATTRIBUTES.merge(attrs)
           Tag.build('input', attributes)
         end
