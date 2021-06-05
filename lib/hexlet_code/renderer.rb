@@ -19,6 +19,9 @@ module HexletCode
           return tag.build(value: value, **attributes)
         end
 
+        pp '=================================================='
+        pp attributes
+        pp '=================================================='
         tag.build(attributes)
       end
     end
