@@ -5,3 +5,4 @@ require 'hexlet_code'
 
 require 'minitest/autorun'
 require 'minitest/pride'
+require 'rails-dom-testing'
