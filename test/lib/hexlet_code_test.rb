@@ -26,18 +26,18 @@ class HexletCodeTest < Minitest::Test
   end
 
   def test_tags
-    html = render_html @form_with_defaults
+    render_html @form_with_defaults
 
-    assert_select html, 'form[method="post"][action="#"]' do
+    assert_select @html, 'form[method="post"][action="#"]' do
       assert_select 'label', 2
       assert_select 'input', 3
     end
   end
 
-  def test_defaults_attributes # rubocop:disable Minitest/MultipleAssertions
-    html = render_html @form_with_defaults
+  def test_defaults_attributes
+    render_html @form_with_defaults
 
-    assert_select html, 'form' do
+    assert_select @html, 'form' do
       assert_select 'label[for="name"]', 'Name'
       assert_select 'input[name="name"][value="rob"]', 1
       assert_select 'input[type="submit"][value="Save"]', 1
@@ -45,17 +45,17 @@ class HexletCodeTest < Minitest::Test
   end
 
   def test_form_textarea
-    html = render_html @form_with_attributes
+    render_html @form_with_attributes
 
-    assert_select html, 'form[action="/somewhere"]' do
+    assert_select @html, 'form[action="/somewhere"]' do
       assert_select 'label[for="job"]', 'Job'
       assert_select 'textarea[rows=50][cols=20]', 'hexlet'
     end
   end
 
   def test_form_submit_tag
-    html = render_html @form_with_attributes
-    assert_select html, 'form input[type="submit"][value="Wow"]', 1
+    render_html @form_with_attributes
+    assert_select @html, 'form input[type="submit"][value="Wow"]', 1
   end
 
   protected
@@ -65,6 +65,6 @@ class HexletCodeTest < Minitest::Test
   end
 
   def fake_render(content)
-    Nokogiri::HTML::Document.parse(content)
+    @html = Nokogiri::HTML::Document.parse(content)
   end
 end
