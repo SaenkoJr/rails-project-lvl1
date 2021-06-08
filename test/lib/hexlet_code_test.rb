@@ -8,7 +8,7 @@ class HexletCodeTest < Minitest::Test
 
   User = Struct.new(:name, :job, keyword_init: true)
 
-  def setup # rubocop:disable Metrics/MethodLength
+  def setup
     @user = User.new(name: 'rob', job: 'hexlet')
     @form_with_defaults = HexletCode.form_for @user do |f|
       f.input :name

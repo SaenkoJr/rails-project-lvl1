@@ -5,6 +5,9 @@ require: rubocop-minitest
 AllCops:
   NewCops: enable
 
+Metrics/MethodLength:
+  Enabled: false
+
 Style/FrozenStringLiteralComment:
   Enabled: true
   SafeAutoCorrect: true
