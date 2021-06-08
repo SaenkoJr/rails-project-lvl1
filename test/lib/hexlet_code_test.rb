@@ -4,7 +4,6 @@ require 'test_helper'
 
 class HexletCodeTest < Minitest::Test
   include Rails::Dom::Testing::Assertions
-  # include Rails::Dom::Testing::Assertions::SelectorAssertions
 
   User = Struct.new(:name, :job, keyword_init: true)
 
@@ -27,29 +26,36 @@ class HexletCodeTest < Minitest::Test
   end
 
   def test_tags
-    render_html @form_with_defaults
-    assert_select 'form[method="post"][action="#"]', 1
-    assert_select 'form label', 2
-    assert_select 'form input', 3
+    html = render_html @form_with_defaults
+
+    assert_select html, 'form[method="post"][action="#"]' do
+      assert_select 'label', 2
+      assert_select 'input', 3
+    end
   end
 
-  def test_defaults_attributes
-    render_html @form_with_defaults
-    assert_select 'form label[for="name"]', 'Name'
-    assert_select 'form input[name="name"][value="rob"]', 1
-    assert_select 'form input[type="submit"][value="Save"]', 1
+  def test_defaults_attributes # rubocop:disable Minitest/MultipleAssertions
+    html = render_html @form_with_defaults
+
+    assert_select html, 'form' do
+      assert_select 'label[for="name"]', 'Name'
+      assert_select 'input[name="name"][value="rob"]', 1
+      assert_select 'input[type="submit"][value="Save"]', 1
+    end
   end
 
   def test_form_textarea
-    render_html @form_with_attributes
-    assert_select 'form[action="/somewhere"]'
-    assert_select 'form label[for="job"]', 'Job'
-    assert_select 'form textarea[rows=50][cols=20]', 'hexlet'
+    html = render_html @form_with_attributes
+
+    assert_select html, 'form[action="/somewhere"]' do
+      assert_select 'label[for="job"]', 'Job'
+      assert_select 'textarea[rows=50][cols=20]', 'hexlet'
+    end
   end
 
   def test_form_submit_tag
-    render_html @form_with_attributes
-    assert_select 'form input[type="submit"][value="Wow"]', 1
+    html = render_html @form_with_attributes
+    assert_select html, 'form input[type="submit"][value="Wow"]', 1
   end
 
   protected
@@ -59,10 +65,6 @@ class HexletCodeTest < Minitest::Test
   end
 
   def fake_render(content)
-    @html_element = Nokogiri::HTML::Document.parse(content)
-  end
-
-  def document_root_element
-    @html_element.root
+    Nokogiri::HTML::Document.parse(content)
   end
 end
